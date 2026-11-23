@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#7ec8e3" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>Sole's Cozy World</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.164.1/build/three.module.js"
+      }
+    }
+  </script>
+</head>
+<body>
+  <canvas id="game-canvas"></canvas>
+
+  <div id="start-screen" class="overlay active">
+    <div class="card welcome-card">
+      <div class="badge">✨ Edizione Speciale per Sole ✨</div>
+      <h1>Sole's Cozy World</h1>
+      <p>Esplora colline morbide, raccogli risorse e costruisci il tuo villaggio accogliente!</p>
+
+      <div class="mode-selector">
+        <button id="btn-start-creative" class="btn primary-btn">
+          🌈 Modalità Creativa
+          <small>Risorse infinite &amp; volo libero</small>
+        </button>
+        <button id="btn-start-survival" class="btn secondary-btn">
+          🌿 Modalità Sopravvivenza
+          <small>Raccogli materiali &amp; gestisci energia</small>
+        </button>
+      </div>
+      <div class="controls-hint">
+        <span>📱 Touch: Joystick + Tasti a schermo</span>
+        <span>💻 PC: WASD + Spazio + Click Sx/Dx</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="hud" class="hidden">
+    <div class="top-bar">
+      <div class="status-pills">
+        <div class="pill mode-pill" id="hud-mode">🌈 Creativa</div>
+        <div class="pill" id="hud-fps">60 FPS</div>
+      </div>
+
+      <div id="survival-bars" class="survival-bars hidden">
+        <div class="bar-wrap" title="Salute">
+          <span>❤️</span>
+          <div class="bar-bg"><div id="health-fill" class="bar-fill health" style="width: 100%"></div></div>
+        </div>
+        <div class="bar-wrap" title="Energia">
+          <span>🍑</span>
+          <div class="bar-bg"><div id="stamina-fill" class="bar-fill stamina" style="width: 100%"></div></div>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button id="btn-fly" class="icon-btn" title="Attiva/Disattiva Volo (Creativa)">🪽</button>
+        <button id="btn-settings" class="icon-btn" title="Impostazioni">⚙️</button>
+      </div>
+    </div>
+
+    <div id="crosshair"></div>
+    <div id="target-label" class="target-label hidden">Erba Morbida</div>
+
+    <div id="touch-controls">
+      <div id="joystick-zone">
+        <div id="joystick-base">
+          <div id="joystick-stick"></div>
+        </div>
+      </div>
+
+      <div id="camera-touch-zone"></div>
+
+      <div class="action-buttons">
+        <button id="btn-touch-jump" class="touch-btn jump-btn">⬆️</button>
+        <div class="action-row">
+          <button id="btn-touch-break" class="touch-btn break-btn">⛏️</button>
+          <button id="btn-touch-place" class="touch-btn place-btn">✨</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="hotbar-container">
+      <div id="hotbar" class="hotbar"></div>
+    </div>
+  </div>
+
+  <div id="settings-modal" class="overlay hidden">
+    <div class="card settings-card">
+      <div class="modal-header">
+        <h2>⚙️ Impostazioni</h2>
+        <button id="btn-close-settings" class="close-btn">✕</button>
+      </div>
+
+      <div class="setting-item">
+        <label for="opt-render-distance">Distanza Visuale (Render Distance)</label>
+        <select id="opt-render-distance">
+          <option value="2">Bassa (Risparmio Batteria)</option>
+          <option value="3" selected>Media (Consigliata)</option>
+          <option value="4">Alta (Orizzonte Ampio)</option>
+        </select>
+      </div>
+
+      <div class="setting-item">
+        <label for="opt-quality">Qualità Grafica &amp; Ombre</label>
+        <select id="opt-quality">
+          <option value="low">Leggera (Senza ombre dinamiche)</option>
+          <option value="medium" selected>Bilanciata (Redmi Pad / Poco X8)</option>
+          <option value="high">Alta (Ombre morbide + Riflessi)</option>
+        </select>
+      </div>
+
+      <div class="setting-item">
+        <label for="opt-sensitivity">Sensibilità Telecamera: <span id="sens-val">1.0</span></label>
+        <input type="range" id="opt-sensitivity" min="0.4" max="2.2" step="0.1" value="1.0" />
+      </div>
+
+      <div class="setting-item row-between">
+        <label for="opt-touch">Mostra Controlli Touch</label>
+        <input type="checkbox" id="opt-touch" checked />
+      </div>
+
+      <div class="setting-item row-between">
+        <label for="opt-audio">Effetti Sonori (Web Audio)</label>
+        <input type="checkbox" id="opt-audio" checked />
+      </div>
+
+      <div class="settings-actions">
+        <button id="btn-switch-mode" class="btn secondary-btn">🔄 Cambia Modalità</button>
+        <button id="btn-new-world" class="btn danger-btn">🌱 Genera Nuovo Mondo</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
